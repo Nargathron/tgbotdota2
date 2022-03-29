@@ -16,7 +16,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: nargathron/tg-bot:latest
+          tags: nargathron/tgbot-pomoja:latest
 
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
