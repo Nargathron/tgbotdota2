@@ -14,22 +14,22 @@ var chat_id= process.env.CHAT_ID;
 
 //express
 app.post('/', (req, res) => {
-    console.log(req.body);
     res.send(req.body);
     const chatId = req.body.message.chat.id;
     const sentMessage = req.body.message.text;
     if (sentMessage === '/roll@CamunityBot') {
-        let roll = Math.floor(Math.random() * 100)
+        roll = Math.floor(Math.random() * 100)
+        response = req.body.message.username + 'выкинул ' + roll
         axios.post(`${url}${apiToken}/sendMessage`,
              {
-                  chat_id: chatId,
-                  text: req.body.message.username + 'выкинул ' + roll
+                  chat_id: chat_id,
+                  text: response
              });
    }
     if (sentMessage === '/go@CamunityBot') {
         axios.post(`${url}${apiToken}/sendMessage`,
              {
-                  chat_id: chatId,
+                  chat_id: chat_id,
                   text: '@n0n3x1s7 @FL00D @Gubernateur @Mikhai11 @gitaroshei @Borgyy @Durdom го, пидарасы'
              });
    }
@@ -38,7 +38,7 @@ app.post('/', (req, res) => {
     if(voiceChannelsUsers.length == 0 ? response = 'Нет никого' : response = ('В голосовом чате сейчас : ' + voiceChannelsUsers.join())){
         axios.post(`${url}${apiToken}/sendMessage`,
         {
-            chat_id: chatId,
+            chat_id: chat_id,
             text: response
         });
       }
