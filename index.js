@@ -25,12 +25,13 @@ app.post('/', (req, res) => {
                   chat_id: chat_id,
                   text: response
              });
-   }
+    }
     if (sentMessage === '/go@CamunityBot') {
+        console.log('pipiska')
         axios.post(`${url}${apiToken}/sendMessage`,
              {
                   chat_id: chat_id,
-                  text: '@n0n3x1s7 @FL00D @Gubernateur @Mikhai11 @gitaroshei @Borgyy @Durdom го, пидарасы'
+                  text: '@n0n3x1s7 @FL00D @Gubernateur @Mikhai11 @gitaroshei @Borgyy @Durdom го'
              });
    }
    if(sentMessage === '/disco@CamunityBot') {
