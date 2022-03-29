@@ -7,10 +7,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Publish to Docker Hub Image
-        uses: docker/build-push-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          repository: nargathron/tg-bot
-          tags: latest, ${{ github.run_number }}
+      - name: Build and Push to Docker Hub Image
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: nargathron/tg-bot:latest
