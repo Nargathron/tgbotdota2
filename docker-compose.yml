@@ -23,7 +23,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /root/tgbot/certs/:/acme.json
   tgbot:
-    image: "nargathron/tgbot-pomoja"
+    image: "nargathron/tgbot-pomoja:latest"
     container_name: "tgbot"
     labels:
       - "traefik.http.routers.adminer.rule=Host(`vpn.borgyy.gq`)"
