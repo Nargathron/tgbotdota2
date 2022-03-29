@@ -10,7 +10,7 @@ const url = 'https://api.telegram.org/bot';
 require('dotenv').config()
 apiToken = process.env.TG_TOKEN;
 app.use(bodyParser.json());
-var chat_id= process.env.CHAT_ID;
+var chat_id = process.env.CHAT_ID;
 
 //express
 app.post('/', (req, res) => {
@@ -79,7 +79,6 @@ client.on("voiceStateUpdate", (oldState, newState) => { // Listeing to the voice
                   text: `${newState.member.user.username} Отключился`
              });
         removeUser(newState.member.user.username);
-        console.log(voiceChannelsUsers)
     }
 });
 
