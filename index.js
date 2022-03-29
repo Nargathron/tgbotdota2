@@ -11,6 +11,7 @@ const url = 'https://api.telegram.org/bot';
 require('dotenv').config()
 apiToken = process.env.TG_TOKEN;
 app.use(bodyParser.json());
+var chat_id= process.env.CHAT_ID;
 
 //express
 app.post('/', (req, res) => {
@@ -21,7 +22,7 @@ app.post('/', (req, res) => {
     if (sentMessage === '/go@BorgPomoja_bot') {
         axios.post(`${url}${apiToken}/sendMessage`,
              {
-                  chat_id: -623840827,
+                  chat_id: chat_id,
                   text: '@n0n3x1s7 @FL00D @Gubernateur @Mikhai11 @gitaroshei @Borgyy @Durdom го, пидарасы'
              });
    }
@@ -30,7 +31,7 @@ app.post('/', (req, res) => {
     if(voiceChannelsUsers.length == 0 ? response = 'Нет никого' : response = ('В голосовом чате сейчас : ' + voiceChannelsUsers.join())){
         axios.post(`${url}${apiToken}/sendMessage`,
         {
-            chat_id: '-623840827',
+            chat_id: chat_id,
             text: response
         });
       }
@@ -59,7 +60,7 @@ client.on("voiceStateUpdate", (oldState, newState) => { // Listeing to the voice
     if (newState.channel && !oldState.channel) { // The member connected to a channel.
         axios.post(`${url}${apiToken}/sendMessage`,
              {
-                  chat_id: '-623840827',
+                  chat_id: chat_id,
                   text: `${newState.member.user.username} Подключился`
              });
         voiceChannelsUsers.push(newState.member.user.username);
@@ -67,7 +68,7 @@ client.on("voiceStateUpdate", (oldState, newState) => { // Listeing to the voice
     if (!newState.channel && oldState.channel) { // The member connected to a channel.
         axios.post(`${url}${apiToken}/sendMessage`,
              {
-                  chat_id: '-623840827',
+                  chat_id: chat_id,
                   text: `${newState.member.user.username} Отключился`
              });
         removeUser(newState.member.user.username);
