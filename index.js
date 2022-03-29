@@ -14,6 +14,7 @@ var chat_id = process.env.CHAT_ID;
 
 //express
 app.post('/', (req, res) => {
+    console.log(req.body);
     res.send(req.body);
     const chatId = req.body.message.chat.id;
     const sentMessage = req.body.message.text;
@@ -61,7 +62,7 @@ const client = new Client({
 })
 
 client.on('ready', () =>{
-    console.log('The bot is ready')
+    console.log('The bot is ready nowwwww')
 })
 
 client.on("voiceStateUpdate", (oldState, newState) => { // Listeing to the voiceStateUpdate event
@@ -86,5 +87,5 @@ client.on("voiceStateUpdate", (oldState, newState) => { // Listeing to the voice
 client.login(process.env.DISCORD_TOKEN);
 
 app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
+    console.log(`Listening on port ${port} wwwww`);
 });
