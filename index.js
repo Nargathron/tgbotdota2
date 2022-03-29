@@ -19,13 +19,12 @@ app.post('/', (req, res) => {
     const chatId = req.body.message.chat.id;
     const sentMessage = req.body.message.text;
     if (sentMessage === '/roll@BorgPomoja_bot') {
-        console.log(req.body);
-        // let roll = Math.floor(Math.random() * 100)
-        // axios.post(`${url}${apiToken}/sendMessage`,
-        //      {
-        //           chat_id: chatId,
-        //           text: req.body
-        //      });
+        let roll = Math.floor(Math.random() * 100)
+        axios.post(`${url}${apiToken}/sendMessage`,
+             {
+                  chat_id: chatId,
+                  text: req.body.message.username + 'выкинул ' + roll
+             });
    }
     if (sentMessage === '/go@BorgPomoja_bot') {
         axios.post(`${url}${apiToken}/sendMessage`,
