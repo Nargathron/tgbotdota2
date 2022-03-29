@@ -1,6 +1,5 @@
 const { Client, Intents } = require('discord.js');
 const dotenv = require('dotenv')
-const { Telegraf } = require('telegraf');
 const express = require('express');
 const app = express();
 const axios = require('axios');
