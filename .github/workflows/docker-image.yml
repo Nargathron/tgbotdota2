@@ -17,3 +17,13 @@ jobs:
         with:
           push: true
           tags: nargathron/tg-bot:latest
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
+      - name: Adding Known Hosts
+        run: ssh-keyscan -H -p9022${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+      - name: Deploy new images
+        run: docker-compose pull && docker-compose up -d
