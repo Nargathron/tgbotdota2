@@ -62,7 +62,7 @@ const client = new Client({
 })
 
 client.on('ready', () =>{
-    console.log('The bot is ready nowwwww')
+    console.log('Dickscord bot is upppp')
 })
 
 client.on("voiceStateUpdate", (oldState, newState) => { // Listeing to the voiceStateUpdate event
@@ -87,5 +87,5 @@ client.on("voiceStateUpdate", (oldState, newState) => { // Listeing to the voice
 client.login(process.env.DISCORD_TOKEN);
 
 app.listen(port, () => {
-    console.log(`Listening on port ${port} wwwww`);
+    console.log(`Listening on port ${port}`);
 });
