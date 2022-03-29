@@ -25,9 +25,5 @@ jobs:
           known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
       - name: Adding Known Hosts
         run: ssh-keyscan -p9022 -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-      - name: Pull new images
-        run: docker-compose pull
-      - name: Stop containers
-        run: docker-compose down
-      - name: Start containers
-        run: docker-compose up -d
+      - name: Deploy new images
+        run: ssh -p9022 root@${{ secrets.SSH_HOST}} && docker-compose pull && docker-compose down && docker-compose up -d
