@@ -31,4 +31,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            cd /root/tgbot
             docker-compose pull && docker-compose up -d
