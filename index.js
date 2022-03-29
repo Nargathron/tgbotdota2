@@ -18,7 +18,7 @@ app.post('/', (req, res) => {
     res.send(req.body);
     const chatId = req.body.message.chat.id;
     const sentMessage = req.body.message.text;
-    if (sentMessage === '/roll@BorgPomoja_bot') {
+    if (sentMessage === '/roll@CamunityBot') {
         let roll = Math.floor(Math.random() * 100)
         axios.post(`${url}${apiToken}/sendMessage`,
              {
@@ -26,14 +26,14 @@ app.post('/', (req, res) => {
                   text: req.body.message.username + 'выкинул ' + roll
              });
    }
-    if (sentMessage === '/go@BorgPomoja_bot') {
+    if (sentMessage === '/go@CamunityBot') {
         axios.post(`${url}${apiToken}/sendMessage`,
              {
                   chat_id: chatId,
                   text: '@n0n3x1s7 @FL00D @Gubernateur @Mikhai11 @gitaroshei @Borgyy @Durdom го, пидарасы'
              });
    }
-   if(sentMessage === '/disco@BorgPomoja_bot') {
+   if(sentMessage === '/disco@CamunityBot') {
        let response = '';
     if(voiceChannelsUsers.length == 0 ? response = 'Нет никого' : response = ('В голосовом чате сейчас : ' + voiceChannelsUsers.join())){
         axios.post(`${url}${apiToken}/sendMessage`,
