@@ -10,7 +10,7 @@ const url = 'https://api.telegram.org/bot';
 require('dotenv').config()
 apiToken = process.env.TG_TOKEN;
 app.use(bodyParser.json());
-var chat_id = process.env.CHAT_ID;
+var chat_id = '';
 
 //express
 app.post('/', (req, res) => {
@@ -18,7 +18,7 @@ app.post('/', (req, res) => {
     res.send(req.body);
     const chatId = req.body.message.chat.id;
     const sentMessage = req.body.message.text;
-
+    chat_id = chatId;
     if (sentMessage === '/roll@CamunityBot') {
         roll = Math.floor(Math.random() * 100)
         response = req.body.message.from.username + ' выкинул ' + roll
@@ -32,7 +32,7 @@ app.post('/', (req, res) => {
         console.log('pipiska')
         axios.post(`${url}${apiToken}/sendMessage`,
              {
-                  chat_id: chat_id,
+                  chat_id: chatId,
                   text: '@n0n3x1s7 @FL00D @Gubernateur @Mikhai11 @gitaroshei @Borgyy @Durdom го'
              });
    }
@@ -41,7 +41,7 @@ app.post('/', (req, res) => {
     if(voiceChannelsUsers.length == 0 ? response = 'Нет никого' : response = ('В голосовом чате сейчас : ' + voiceChannelsUsers.join())){
         axios.post(`${url}${apiToken}/sendMessage`,
         {
-            chat_id: chat_id,
+            chat_id: chatId,
             text: response
         });
       }
