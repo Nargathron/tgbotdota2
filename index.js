@@ -10,7 +10,7 @@ const url = 'https://api.telegram.org/bot';
 require('dotenv').config()
 apiToken = process.env.TG_TOKEN;
 app.use(bodyParser.json());
-var chat_id = '';
+var chat_id = process.env.CHAT_ID;
 
 //express
 app.post('/', (req, res) => {
@@ -18,7 +18,6 @@ app.post('/', (req, res) => {
     res.send(req.body);
     const chatId = req.body.message.chat.id;
     const sentMessage = req.body.message.text;
-    chat_id = chatId;
     if (sentMessage === '/roll@CamunityBot') {
         roll = Math.floor(Math.random() * 100)
         response = req.body.message.from.username + ' выкинул ' + roll
