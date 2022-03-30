@@ -14,7 +14,7 @@ var chat_id = process.env.CHAT_ID;
 
 //express
 app.post('/', (req, res) => {
-    console.log(req.body);
+    console.log(req.body.message);
     res.send(req.body);
     const chatId = req.body.message.chat.id;
     const sentMessage = req.body.message.text;
@@ -68,7 +68,7 @@ client.on("voiceStateUpdate", (oldState, newState) => { // Listeing to the voice
         axios.post(`${url}${apiToken}/sendMessage`,
              {
                   chat_id: chat_id,
-                  text: `${newState.member.user.username} Подключился`
+                  text: `${newState.member.user.username} зашел в Дискорд`
              });
         voiceChannelsUsers.push(newState.member.user.username);
     }
