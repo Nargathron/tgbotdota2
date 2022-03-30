@@ -53,10 +53,9 @@ function removeUser(user){
     voiceChannelsUsers = voiceChannelsUsers.filter(e => e != user)
 }
 
+const intents =new Discord.Intents(32767)
 const client = new Client({
-    intents: [
-        Intents.FLAGS.ALL
-    ]
+    intents
 })
 
 client.on('ready', () =>{
@@ -65,7 +64,7 @@ client.on('ready', () =>{
 
 client.on("voiceStateUpdate", (oldState, newState) => { // Listeing to the voiceStateUpdate event
     if (newState.channel && !oldState.channel) { // The member connected to a channel.
-        console.log(newState.member.user.presence.activities)
+        console.log(newState.member.presence.activities)
         axios.post(`${url}${apiToken}/sendMessage`,
              {
                   chat_id: chat_id,
