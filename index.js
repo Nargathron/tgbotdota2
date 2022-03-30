@@ -24,7 +24,7 @@ app.post('/', (req, res) => {
         response = req.body.message.from.username + ' выкинул ' + roll
         axios.post(`${url}${apiToken}/sendMessage`,
              {
-                  chat_id: chat_id,
+                  chat_id: chatId,
                   text: response
              });
     }
