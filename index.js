@@ -18,9 +18,10 @@ app.post('/', (req, res) => {
     res.send(req.body);
     const chatId = req.body.message.chat.id;
     const sentMessage = req.body.message.text;
+
     if (sentMessage === '/roll@CamunityBot') {
         roll = Math.floor(Math.random() * 100)
-        response = req.body.message.username + 'выкинул ' + roll
+        response = req.body.message.username + ' выкинул ' + roll
         axios.post(`${url}${apiToken}/sendMessage`,
              {
                   chat_id: chat_id,
