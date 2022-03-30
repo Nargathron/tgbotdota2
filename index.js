@@ -64,7 +64,7 @@ client.on('ready', () =>{
 
 client.on("voiceStateUpdate", (oldState, newState) => { // Listeing to the voiceStateUpdate event
     if (newState.channel && !oldState.channel) { // The member connected to a channel.
-        console.log(newState.member.presence.activities)
+        console.log(newState.member.presence.activities.Activity.name)
         axios.post(`${url}${apiToken}/sendMessage`,
              {
                   chat_id: chat_id,
