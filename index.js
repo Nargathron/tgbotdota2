@@ -55,9 +55,7 @@ function removeUser(user){
 
 const client = new Client({
     intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.GUILD_VOICE_STATES
+        Intents.FLAGS.ALL
     ]
 })
 
@@ -67,7 +65,7 @@ client.on('ready', () =>{
 
 client.on("voiceStateUpdate", (oldState, newState) => { // Listeing to the voiceStateUpdate event
     if (newState.channel && !oldState.channel) { // The member connected to a channel.
-        console.log(newState.member.presence.activities)
+        console.log(newState.member.user.presence.activities)
         axios.post(`${url}${apiToken}/sendMessage`,
              {
                   chat_id: chat_id,
