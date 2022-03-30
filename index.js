@@ -53,7 +53,7 @@ function removeUser(user){
     voiceChannelsUsers = voiceChannelsUsers.filter(e => e != user)
 }
 
-const intents =new Discord.Intents(32767)
+const intents = new Intents(32767)
 const client = new Client({
     intents
 })
