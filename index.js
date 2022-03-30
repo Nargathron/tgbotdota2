@@ -76,7 +76,7 @@ client.on("voiceStateUpdate", (oldState, newState) => { // Listeing to the voice
         axios.post(`${url}${apiToken}/sendMessage`,
              {
                   chat_id: chat_id,
-                  text: `${newState.member.user.username} Отключился`
+                  text: `${newState.member.user.username} вышел из Дискорда`
              });
         removeUser(newState.member.user.username);
     }
