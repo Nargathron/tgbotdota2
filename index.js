@@ -35,7 +35,8 @@ app.post('/', (req, res) => {
     if (sentMessage === '/go@CamunityBot') {
       const image = '';
       axios.get('https://yesno.wtf/api').then(res => {
-        image = res.data.image
+        console.log(res.data.body)
+        image = res.body.image
       })
       axios.post(`${url}${apiToken}/sendPhoto`,{
         chat_id: chatId,
