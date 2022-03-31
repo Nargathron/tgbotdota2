@@ -18,6 +18,11 @@ app.post('/', (req, res) => {
     res.send(req.body);
     const chatId = req.body.message.chat.id;
     const sentMessage = req.body.message.text;
+    if (sentMessage === '/yesorno@BorgPomoja_bot'){
+      axios.get('https://yesno.wtf/api').then(res => {
+        console.log(res.data)
+      })
+    }
     if (sentMessage === '/roll@CamunityBot') {
         roll = Math.floor(Math.random() * 100)
         response = req.body.message.from.username + ' выкинул ' + roll
@@ -28,12 +33,14 @@ app.post('/', (req, res) => {
              });
     }
     if (sentMessage === '/go@CamunityBot') {
-        console.log('pipiska')
-        axios.post(`${url}${apiToken}/sendMessage`,
-             {
-                  chat_id: chatId,
-                  text: '@n0n3x1s7 @FL00D @Gubernateur @Mikhai11 @gitaroshei @Borgyy @Durdom го'
-             });
+      axios.get('https://yesno.wtf/api').then(res => {
+        console.log(res.data)
+      })
+        // axios.post(`${url}${apiToken}/sendMessage`,
+        //      {
+        //           chat_id: chatId,
+        //           text: '@n0n3x1s7 @FL00D @Gubernateur @Mikhai11 @gitaroshei @Borgyy @Durdom го'
+        //      });
    }
    if(sentMessage === '/disco@CamunityBot') {
        let response = '';
@@ -59,7 +66,7 @@ const client = new Client({
 })
 
 client.on('ready', () =>{
-    console.log('Dickscord bot is upppp')
+    console.log('Dickscord bot is up')
 })
 
 client.on("voiceStateUpdate", (oldState, newState) => { // Listeing to the voiceStateUpdate event
