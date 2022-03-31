@@ -39,7 +39,7 @@ app.post('/', (req, res) => {
       })
       axios.post(`${url}${apiToken}/sendPhoto`,{
         chat_id: chatId,
-        photo: image
+        photo: "https://yesno.wtf/assets/yes/11-a23cbde4ae018bbda812d2d8b2b8fc6c.gif"
       })
         // axios.post(`${url}${apiToken}/sendMessage`,
         //      {
