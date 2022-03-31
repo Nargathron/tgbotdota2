@@ -35,13 +35,12 @@ app.post('/', (req, res) => {
     if (sentMessage === '/go@CamunityBot') {
       var image = '';
       axios.get('https://yesno.wtf/api').then(res => {
-        console.log(res.data)
-        image = res.data.image;
+        console.log(res.data.image)
       })
-      axios.post(`${url}${apiToken}/sendMessage`,{
-        chat_id: chatId,
-        photo: image
-      })
+      // axios.post(`${url}${apiToken}/sendMessage`,{
+      //   chat_id: chatId,
+      //   photo: image
+      // })
         // axios.post(`${url}${apiToken}/sendMessage`,
         //      {
         //           chat_id: chatId,
