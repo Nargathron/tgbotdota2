@@ -33,7 +33,7 @@ app.post('/', (req, res) => {
              });
     }
     if (sentMessage === '/go@CamunityBot') {
-      var image = '';
+      const image = '';
       axios.get('https://yesno.wtf/api').then(res => {
         image = res.data.image
       })
