@@ -72,66 +72,23 @@ app.post("/", (req, res) => {
             time +
             "\n";
         }
-        console.log(text);
       });
-      // axios.post(`${url}${apiToken}/sendMessage`, {
-      //   chat_id: chatId,
-      //   text,
-      // });
+      axios.post(`${url}${apiToken}/sendMessage`, {
+        chat_id: chatId,
+        text,
+      });
     };
     getUsers();
   }
 });
-// const user = await guild.members.cache.get("289472906386210819");
-// const voiceChatUsers = await guild.channels.get("510566162438815775");
-// console.log(user.presence?.activities[0].name);
-
-//   var users = "";
-//   var str = "";
-
-//   voiceChannelsUsers.map((user) => {
-//     users += user.name + " ебошит в " + user.activity + "\n";
-//   });
-//   if (voiceChannelsUsers.length == 1) {
-//     str = "ебатель";
-//   } else if (voiceChannelsUsers.length == 2) {
-//     str = "ебателя";
-//   } else if (voiceChannelsUsers.length == 3) {
-//     str = "ебателя";
-//   } else if (voiceChannelsUsers.length == 4) {
-//     str = "ебателя";
-//   } else if (voiceChannelsUsers.length >= 5) {
-//     str = "ебателей";
-//   }
-//   if (
-//     voiceChannelsUsers.length == 0
-//       ? (response = "Ебатели отсутствуют")
-//       : (response =
-//           "В голосовом чате сейчас (" +
-//           voiceChannelsUsers.length +
-//           ") " +
-//           str +
-//           ":\n" +
-//           users)
-//   ) {
-//     axios.post(`${url}${apiToken}/sendMessage`, {
-//       chat_id: chatId,
-//       text: response,
-//     });
-//   }
-// }
-
-//bots
 
 client.on("ready", async () => {
   console.log("Discord bot is ready");
 });
 
 client.on("voiceStateUpdate", (oldState, newState) => {
-  // Listeing to the voiceStateUpdate event
   var activity = "";
   if (newState.channel && !oldState.channel) {
-    // The member connected to a channel.
     axios.post(`${url}${apiToken}/sendMessage`, {
       chat_id: chat_id,
       text: `${newState.member.user.username} зашел в Дискорд`,
