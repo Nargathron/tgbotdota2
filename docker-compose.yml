@@ -18,10 +18,21 @@ services:
       - --certificatesresolvers.leresolver.acme.tlschallenge=true
     ports:
       - "80:80"
+      - "3000:3000"
       - "443:443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /root/tgbot/certs/:/acme.json
+  serverslist:
+    image: "nargathron/serverslist:latest"
+    container_name: "srvlist"
+    labels:
+      - "traefik.http.routers.adminer.rule=Host(`vpn.borgyy.gq`)  && Path(`servers`)"
+      - "traefik.http.services.adminer.loadbalancer.server.port=80"
+      - "traefik.http.routers.adminer.entrypoints=websecure"
+      - "traefik.http.routers.adminer.tls.certresolver=leresolver"
+      - "traefik.http.routers.adminer.middlewares=auth"
+      - "traefik.http.middlewares.auth.basicauth.users=wapi:$$2y$$10$$jitEh7yO2Ikg/sKS51nlA.ATLzpwwyhAz.Ev16cI7XANUm5JdLTeq"
   tgbot:
     image: "nargathron/tgbot-pomoja:latest"
     container_name: "tgbot"
