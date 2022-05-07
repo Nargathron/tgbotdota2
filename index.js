@@ -17,8 +17,6 @@ const client = new Client({
   intents,
 });
 
-var voiceChannelsUsers = [];
-
 //express
 app.post("/", (req, res) => {
   console.log(req.body.message);
@@ -52,12 +50,12 @@ app.post("/", (req, res) => {
     });
   }
   if (sentMessage === "/disco@CamunityBot") {
-    let text = [];
+    text = [];
     const getUsers = async () => {
       const guild = await client.guilds.cache.get("385379150535458816");
       const vc = guild.channels.cache.get("510566162438815775");
+      console.log(vc.members);
       vc.members.map((user) => {
-        console.log(user.presence?.activities[0]);
         if (!user.presence?.activities[0]) {
           text += user.user.username + " - Прост сидит\n";
         } else if (user.presence?.activities[0]) {
@@ -68,11 +66,14 @@ app.post("/", (req, res) => {
             user.user.username +
             " - играет в " +
             user.presence?.activities[0].name +
-            " зашел в " +
+            " c " +
             time +
             "\n";
         }
       });
+      if (text.length === 0) {
+        text = "Никого нет..";
+      }
       axios.post(`${url}${apiToken}/sendMessage`, {
         chat_id: chatId,
         text,
@@ -93,17 +94,6 @@ client.on("voiceStateUpdate", (oldState, newState) => {
       chat_id: chat_id,
       text: `${newState.member.user.username} зашел в Дискорд`,
     });
-    if (newState.member.presence.activities != "") {
-      activity = newState.member.presence.activities[0].name;
-    } else {
-      activity = "ничто";
-    }
-    user = {
-      name: newState.member.user.username,
-      activity: activity,
-    };
-    console.log(user);
-    voiceChannelsUsers.push(user);
   }
 
   if (!newState.channel && oldState.channel) {
@@ -112,10 +102,6 @@ client.on("voiceStateUpdate", (oldState, newState) => {
       chat_id: chat_id,
       text: `${newState.member.user.username} вышел из Дискорда`,
     });
-
-    voiceChannelsUsers = voiceChannelsUsers.filter(
-      (user) => user.name != newState.member.user.username
-    );
   }
 });
 
