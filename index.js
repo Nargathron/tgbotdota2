@@ -13,6 +13,30 @@ var accounts = [
     name: "Borgyy",
     steamId: 180286854,
   },
+  {
+    name: "Mikhai11",
+    steamId: 82648981,
+  },
+  {
+    name: "n0n3x1s7",
+    steamId: 847253860,
+  },
+  {
+    name: "FL00D",
+    steamId: 921667811,
+  },
+  {
+    name: "Bobash11",
+    steamId: 195352440,
+  },
+  {
+    name: "gitaroshei",
+    steamId: 423799577,
+  },
+  {
+    name: "Gubernateur",
+    steamId: 385633025,
+  },
 ];
 
 require("dotenv").config();
@@ -29,9 +53,46 @@ app.post("/", (req, res) => {
   // console.log(req.body.message);
   res.send(req.body);
   if (req.body.callback_query) {
-    var callback = req.body.callback_query.data;
+    console.log(req.body.callback_query);
+    var matchId = req.body.callback_query.data;
+    var chatCallbackId = req.body.callback_query.message.chat.id;
+    const getStatsFromMatchId = async () => {
+      const stats = axios.get(
+        `https://tg.borgyy.gq/tg/getMatchStat/${matchId}`
+      );
+      const matchStats = await stats;
+      var resp = [];
+      matchStats.data.match.players.map((player) => {
+        resp +=
+          "\n" +
+          player.steamAccount.name +
+          ": \n" +
+          " - Hero: " +
+          player.hero.name.slice(14, player.hero.name.length) +
+          "\n" +
+          " - kda: " +
+          player.kills +
+          "/" +
+          player.deaths +
+          "/" +
+          player.assists +
+          "\n" +
+          " - networth: " +
+          player.networth +
+          "\n" +
+          " - herodamage: " +
+          player.heroDamage;
+      });
+      return resp;
+    };
+    getStatsFromMatchId().then((resp) => {
+      axios.post(`${url}${apiToken}/sendMessage`, {
+        chat_id: chatCallbackId,
+        parse_mode: "HTML",
+        text: resp,
+      });
+    });
   }
-  console.log(callback);
   if (req.body.message) {
     var chatId = req.body.message.chat.id;
     var sentMessage = req.body.message.text;
@@ -51,36 +112,38 @@ app.post("/", (req, res) => {
       (account) => account.name === req.body.message.from.username
     );
     const getMatches = async () => {
-      var matchesPromise = await axios.get(
-        `https://tg.borgyy.gq/tg/getMatches/${acc.steamId}`
-      );
-      const matches = await matchesPromise.data.matches;
-      return matches;
+      if (acc.steamId) {
+        var matchesPromise = await axios.get(
+          `https://tg.borgyy.gq/tg/getMatches/${acc.steamId}`
+        );
+        const matches = await matchesPromise.data.matches;
+        return matches.slice(0, 5);
+      }
     };
     const createKeyboard = async () => {
-      var resp = req.body.message.from.username + ", выбери игру";
       const matches = await getMatches();
-      const inline_keyboard = [];
+      const keyboard = [];
       matches.map((match) => {
-        inline_keyboard.push([
+        keyboard.push([
           {
             text: "Игра id: " + match.id,
             callback_data: match.id,
           },
         ]);
       });
-      return inline_keyboard;
+      return keyboard;
     };
-    сщтые;
     createKeyboard().then((keyboard) => {
+      var resp = req.body.message.from.username + ", выбери игру";
+      var chatId = req.body.message.chat.id;
+      const k = { inline_keyboard: keyboard };
       axios.post(`${url}${apiToken}/sendMessage`, {
         chat_id: chatId,
         text: resp,
-        parse_mode: "HTML",
-        reply_markup: JSON.stringify(keyboard),
+        // parse_mode: "HTML",
+        reply_markup: JSON.stringify(k),
       });
     });
-    sendKeyboard();
   }
 
   if (sentMessage === "/roll@CamunityBot") {
@@ -138,7 +201,6 @@ client.on("ready", async () => {
 });
 
 client.on("voiceStateUpdate", (oldState, newState) => {
-  var activity = "";
   if (newState.channel && !oldState.channel) {
     axios.post(`${url}${apiToken}/sendMessage`, {
       chat_id: chat_id,
