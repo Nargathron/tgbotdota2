@@ -8,6 +8,13 @@ const { response } = require("express");
 const port = 80;
 const url = "https://api.telegram.org/bot";
 
+var accounts = [
+  {
+    name: "Borgyy",
+    steamId: 180286854,
+  },
+];
+
 require("dotenv").config();
 apiToken = process.env.TG_TOKEN;
 app.use(bodyParser.json());
@@ -19,10 +26,16 @@ const client = new Client({
 
 //express
 app.post("/", (req, res) => {
-  console.log(req.body.message);
+  // console.log(req.body.message);
   res.send(req.body);
-  const chatId = req.body.message.chat.id;
-  const sentMessage = req.body.message.text;
+  if (req.body.callback_query) {
+    var callback = req.body.callback_query.data;
+  }
+  console.log(callback);
+  if (req.body.message) {
+    var chatId = req.body.message.chat.id;
+    var sentMessage = req.body.message.text;
+  }
   if (sentMessage === "/yesorno@CamunityBot") {
     axios.get("https://yesno.wtf/api").then((res) => {
       console.log(res.data.image);
@@ -33,9 +46,46 @@ app.post("/", (req, res) => {
       });
     });
   }
+  if (sentMessage === "/getlast5@CamunityBot") {
+    var acc = accounts.find(
+      (account) => account.name === req.body.message.from.username
+    );
+    const getMatches = async () => {
+      var matchesPromise = await axios.get(
+        `https://tg.borgyy.gq/tg/getMatches/${acc.steamId}`
+      );
+      const matches = await matchesPromise.data.matches;
+      return matches;
+    };
+    const createKeyboard = async () => {
+      var resp = req.body.message.from.username + ", выбери игру";
+      const matches = await getMatches();
+      const inline_keyboard = [];
+      matches.map((match) => {
+        inline_keyboard.push([
+          {
+            text: "Игра id: " + match.id,
+            callback_data: match.id,
+          },
+        ]);
+      });
+      return inline_keyboard;
+    };
+    сщтые;
+    createKeyboard().then((keyboard) => {
+      axios.post(`${url}${apiToken}/sendMessage`, {
+        chat_id: chatId,
+        text: resp,
+        parse_mode: "HTML",
+        reply_markup: JSON.stringify(keyboard),
+      });
+    });
+    sendKeyboard();
+  }
+
   if (sentMessage === "/roll@CamunityBot") {
-    roll = Math.floor(Math.random() * 100);
-    response = req.body.message.from.username + " выкинул " + roll;
+    const roll = Math.floor(Math.random() * 100);
+    const response = req.body.message.from.username + " выкинул " + roll;
     axios.post(`${url}${apiToken}/sendMessage`, {
       chat_id: chatId,
       text: response,
@@ -46,7 +96,7 @@ app.post("/", (req, res) => {
       chat_id: chatId,
       text:
         req.body.message.from.username +
-        " собирает помоек: @n0n3x1s7 @FL00D @Gubernateur @Mikhai11 @gitaroshei @Borgyy @Durdom",
+        " собирает помоек: @n0n3x1s7 @FL00D @Gubernateur @Mikhai11 @gitaroshei @Borgyy @Durdom и любимый @Bobash11 550 эмэмэр ",
     });
   }
   if (sentMessage === "/disco@CamunityBot") {
