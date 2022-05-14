@@ -124,6 +124,7 @@ app.post("/", (req, res) => {
       const matches = await getMatches();
       const keyboard = [];
       matches.map((match) => {
+        // var date = new Date(match.)
         keyboard.push([
           {
             text: "Игра id: " + match.id,
