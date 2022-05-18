@@ -104,16 +104,6 @@ app.post("/", (req, res) => {
     var chatId = req.body.message.chat.id;
     var sentMessage = req.body.message.text;
   }
-  if (sentMessage === "/yesorno@CamunityBot") {
-    axios.get("https://yesno.wtf/api").then((res) => {
-      console.log(res.data.image);
-      var image = res.data.image;
-      axios.post(`${url}${apiToken}/sendAnimation`, {
-        chat_id: chatId,
-        animation: image,
-      });
-    });
-  }
   if (sentMessage === "/getlast5@CamunityBot") {
     var acc = accounts.find(
       (account) => account.name === req.body.message.from.username
