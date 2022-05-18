@@ -53,7 +53,6 @@ app.post("/", (req, res) => {
   // console.log(req.body.message);
   res.send(req.body);
   if (req.body.callback_query) {
-    console.log(req.body.callback_query);
     var matchId = req.body.callback_query.data;
     var chatCallbackId = req.body.callback_query.message.chat.id;
     const getStatsFromMatchId = async () => {
@@ -124,10 +123,12 @@ app.post("/", (req, res) => {
       const matches = await getMatches();
       const keyboard = [];
       matches.map((match) => {
-        // var date = new Date(match.)
+        var date = new Date(match.parsedDateTime * 1000)
+          .toLocaleString("ru-RU", { timeZone: "Europe/Moscow" })
+          .slice(0, 20);
         keyboard.push([
           {
-            text: "Игра id: " + match.id,
+            text: "Игра id: " + match.id + " в " + date,
             callback_data: match.id,
           },
         ]);
@@ -168,7 +169,6 @@ app.post("/", (req, res) => {
     const getUsers = async () => {
       const guild = await client.guilds.cache.get("385379150535458816");
       const vc = guild.channels.cache.get("510566162438815775");
-      console.log(vc.members);
       vc.members.map((user) => {
         if (!user.presence?.activities[0]) {
           text += user.user.username + " - Прост сидит\n";
