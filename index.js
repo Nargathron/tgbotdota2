@@ -64,23 +64,31 @@ app.post("/", (req, res) => {
       matchStats.data.match.players.map((player) => {
         resp +=
           "\n" +
+          "<b>Nick: </b> " +
+          "<i>" +
           player.steamAccount.name +
-          ": \n" +
-          " - Hero: " +
-          player.hero.name.slice(14, player.hero.name.length) +
+          "</i>" +
           "\n" +
-          " - kda: " +
+          "<b>Hero:</b> " +
+          player.hero.name.slice(14, player.hero.name.length) +
+          " <b>kda: </b>" +
+          "<u>" +
           player.kills +
           "/" +
           player.deaths +
           "/" +
           player.assists +
-          "\n" +
-          " - networth: " +
+          "</u>" +
+          " <b>networth:</b> " +
+          "<u>" +
           player.networth +
+          "</u>" +
+          " <b>herodamage:</b> " +
+          "<u>" +
+          player.heroDamage +
+          "</u>" +
           "\n" +
-          " - herodamage: " +
-          player.heroDamage;
+          "—————————————";
       });
       return resp;
     };
